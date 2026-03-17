@@ -67,6 +67,10 @@ Quick reference — details in [references/design-patterns.md](references/design
 - References: one level deep, loaded on demand — never use `@` links
 - Progressive loading: startup = name+description only → invocation = SKILL.md → on-demand = references/
 
+## Anti-Patterns
+
+19 common mistakes that degrade skill quality — [references/anti-patterns.md](references/anti-patterns.md). Includes a review checklist for auditing existing skills.
+
 ## TDD Workflow
 
 **RED**: Build a pressure scenario. Test without the skill. Record baseline.
