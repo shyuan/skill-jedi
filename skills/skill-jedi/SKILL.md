@@ -62,7 +62,7 @@ Quick reference — details in [references/design-patterns.md](references/design
 
 ## Token Budget
 
-- Description budget: **2% of context window** (dynamic); keep under 200 chars
+- Description budget: **2% of context window** (dynamic, shared across all skills). 1M context ≈ 20K chars total. Be concise, but don't sacrifice trigger quality for brevity.
 - SKILL.md body: < 500 words, < 500 lines
 - References: one level deep, loaded on demand — never use `@` links
 - Progressive loading: startup = name+description only → invocation = SKILL.md → on-demand = references/

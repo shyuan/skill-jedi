@@ -40,7 +40,7 @@ Proven patterns for writing effective Claude Code skills. Based on obra/superpow
 - Start with `Use when...`, write in third person
 - **Never describe workflow steps in description** — AI may read only the description and act on it prematurely
 - Include keywords users would naturally say (improves auto-invocation matching)
-- Keep under 200 characters when possible — description budget is 2% of context window, shared across all skills
+- Description budget is 2% of context window, shared across all skills (1M context ≈ 20K chars total). Be concise, but prioritize trigger quality over arbitrary length limits.
 
 ---
 
@@ -249,7 +249,7 @@ Example: `office-docs` — Microsoft Office XML format reference.
 
 | Component | Budget |
 |-----------|--------|
-| Description | < 200 characters (aim tight) |
+| Description | Concise but complete — prioritize trigger quality (budget: 2% of context window) |
 | SKILL.md body | < 500 words, < 500 lines |
 | Frequently loaded skills | < 200 words body |
 | References | One level deep, loaded on demand |
