@@ -70,7 +70,7 @@ Skill dir: ${CLAUDE_SKILL_DIR}
 
 ### Shell Command Injection
 
-Pre-render skill content with live data using `` !`command` `` syntax:
+Pre-render skill content with live data using the `!` + backtick-wrapped command syntax:
 
 ```markdown
 ## Current PR context

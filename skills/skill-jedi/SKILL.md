@@ -47,7 +47,7 @@ Skills support runtime injection:
 
 - **Arguments**: `$ARGUMENTS`, `$0`, `$1` — from `/skill-name arg0 arg1`
 - **Variables**: `${CLAUDE_SESSION_ID}`, `${CLAUDE_SKILL_DIR}`
-- **Shell**: `` !`gh pr diff` `` — executes before Claude sees the skill
+- **Shell**: `!` + backtick-wrapped command — executes before Claude sees the skill
 
 ## Six Design Patterns
 
