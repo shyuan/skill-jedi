@@ -14,6 +14,7 @@ Complements the built-in `skill-creator` (which teaches *how to build*) by teach
 - **Token budget mechanics** — 2% context window budget, progressive loading system
 - **Plugin packaging** — Full plugin.json schema, 6 source types, hooks, LSP servers, release channels
 - **Hooks system** — 17 lifecycle events, 3 handler types, skill-scoped hooks
+- **19 anti-patterns** — Common mistakes with symptoms, fixes, and a review checklist
 - **TDD workflow** — RED/GREEN/REFACTOR cycle for skill development
 
 ## Install
