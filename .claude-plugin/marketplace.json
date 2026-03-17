@@ -1,0 +1,22 @@
+{
+  "name": "skill-jedi",
+  "owner": {
+    "name": "shyuan",
+    "email": ""
+  },
+  "metadata": {
+    "description": "Master the art of skill & plugin design for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "skill-jedi",
+      "source": {
+        "source": "path",
+        "path": "./"
+      },
+      "description": "Design patterns and architecture guide for Claude Code skills and plugins",
+      "version": "1.0.0"
+    }
+  ]
+}
