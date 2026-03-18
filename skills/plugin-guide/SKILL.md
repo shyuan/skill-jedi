@@ -94,6 +94,14 @@ Track popular vs under-triggering skills to guide curation.
 
 Store config, logs, and state in `${CLAUDE_PLUGIN_DATA}`, not in the skill directory.
 
+## Gotchas
+
+- Changed plugin code but didn't bump version → users see stale code forever (cache keys on version)
+- Put files other than `plugin.json` inside `.claude-plugin/` → plugin fails to load
+- MCP server uses `Bun.spawn` → breaks for users without Bun; use `node:child_process` instead
+- MCP tools installed but not visible → requires a new session to load
+- Common Pitfalls in [references/plugin-architecture.md](references/plugin-architecture.md) has the full list
+
 ## Full Architecture Reference
 
 Three-repo model, marketplace.json schema, hooks system, MCP embedding — see [references/plugin-architecture.md](references/plugin-architecture.md).
