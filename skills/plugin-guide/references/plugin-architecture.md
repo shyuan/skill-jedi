@@ -177,7 +177,7 @@ Plugin repo includes its own `.claude-plugin/marketplace.json` with `source: "./
   "plugins": [
     {
       "name": "my-plugin",
-      "source": { "source": "path", "path": "./" },
+      "source": "./",
       "description": "...",
       "version": "1.0.0"
     }
