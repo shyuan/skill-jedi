@@ -55,4 +55,4 @@ description: >
 
 ## Full Anti-Pattern Catalog
 
-19 documented anti-patterns with symptoms, root causes, and fixes — see [references/anti-patterns.md](references/anti-patterns.md).
+22 documented anti-patterns with symptoms, root causes, and fixes — see [references/anti-patterns.md](references/anti-patterns.md).
