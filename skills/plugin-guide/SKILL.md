@@ -3,9 +3,10 @@ name: plugin-guide
 user_invocable: true
 description: >
   Guide for packaging Claude Code skills into distributable plugins.
-  Use when creating a plugin for marketplace distribution, setting up
-  plugin.json, configuring marketplace.json, embedding MCP servers,
-  or deciding between repo-checked skills vs plugin marketplace.
+  Use after a skill is built (/skill-creator), designed (/skill-jedi), and
+  reviewed (/skill-review), and you're ready to distribute it. Covers
+  plugin.json setup, marketplace.json configuration, MCP server embedding,
+  three-repo model, and choosing repo-checked skills vs plugin marketplace.
   Also use when the user says "publish my skill" or "make a plugin".
 ---
 

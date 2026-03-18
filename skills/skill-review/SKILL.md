@@ -2,11 +2,11 @@
 name: skill-review
 user_invocable: true
 description: >
-  Audit and review Claude Code skills for quality, anti-patterns, and effectiveness.
-  Use when reviewing an existing skill's design, checking for common mistakes,
-  running a quality audit before publishing, or when a skill isn't triggering
-  or behaving as expected. Also use when the user says "review my skill" or
-  "why isn't my skill working".
+  Audit Claude Code skills against 22 anti-patterns for quality and effectiveness.
+  Use after building a skill with /skill-creator and refining design with /skill-jedi,
+  to catch common mistakes before publishing. Also use when a skill isn't triggering
+  or behaving as expected, when running a quality gate before marketplace submission,
+  or when the user says "review my skill" or "why isn't my skill working".
 ---
 
 # Skill Review — Anti-Pattern Audit

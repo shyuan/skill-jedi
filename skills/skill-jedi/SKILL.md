@@ -2,10 +2,12 @@
 name: skill-jedi
 user_invocable: true
 description: >
-  Guide for designing effective Claude Code skills with proven patterns.
-  Use when creating a new skill and need design guidance beyond basic structure,
-  when deciding skill architecture (MCP vs skill vs plugin), when optimizing
-  token efficiency, or when choosing the right skill type for your use case.
+  Design patterns and architecture guide for Claude Code skills.
+  Use after /skill-creator builds a working skill and you want to elevate its
+  design — choosing the right skill type, applying proven patterns (Iron Law,
+  Hub-and-Spoke, Rationalization Table), optimizing token budget, or deciding
+  between MCP vs skill vs plugin. Complements /skill-creator (which handles
+  building and testing) by teaching how to design well.
   Not for reviewing existing skills (use /skill-review) or plugin packaging (use /plugin-guide).
 ---
 
