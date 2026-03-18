@@ -1,6 +1,6 @@
 # Skill Design Patterns
 
-Proven patterns for writing effective Claude Code skills. Based on obra/superpowers ecosystem research, Anthropic documentation, and community best practices (updated 2026-03).
+Proven patterns for writing effective Claude Code skills. Based on obra/superpowers ecosystem research, Anthropic documentation, Anthropic internal practices, and community best practices (updated 2026-03).
 
 ---
 
@@ -44,6 +44,68 @@ Proven patterns for writing effective Claude Code skills. Based on obra/superpow
 
 ---
 
+## Nine Skill Types
+
+Skills cluster into recurring categories. The best skills fit cleanly into one; confusing skills straddle several.
+
+### 1. Library & API Reference
+
+Skills that explain how to correctly use a library, CLI, or SDK. Include reference code snippets and a list of gotchas.
+
+**Examples**: `billing-lib` (internal billing edge cases), `internal-platform-cli` (subcommands with examples), `frontend-design` (your design system)
+
+### 2. Product Verification
+
+Skills that test/verify code works. Often paired with playwright, tmux, or similar tools. **Worth investing heavily** — consider having an engineer spend a week making verification skills excellent.
+
+Techniques: have Claude record video of its output, enforce programmatic assertions at each step, include test scripts in the skill folder.
+
+**Examples**: `signup-flow-driver` (headless browser verification), `checkout-verifier` (Stripe test cards), `tmux-cli-driver` (TTY-based CLI testing)
+
+### 3. Data Fetching & Analysis
+
+Skills that connect to your data and monitoring stacks. Include libraries, credentials references, dashboard IDs, and common query workflows.
+
+**Examples**: `funnel-query` (event joins for signup → activation → paid), `cohort-compare` (retention/conversion with significance testing), `grafana` (datasource UIDs, problem → dashboard lookup)
+
+### 4. Business Process & Team Automation
+
+Skills that automate repetitive workflows into one command. Often depend on other skills or MCPs. Tip: save results in log files to help Claude stay consistent across executions.
+
+**Examples**: `standup-post` (aggregates tracker + GitHub + Slack), `create-ticket` (enforces schema + post-creation workflow), `weekly-recap` (PRs + tickets + deploys → formatted post)
+
+### 5. Code Scaffolding & Templates
+
+Skills that generate boilerplate for your specific codebase. Combine with composable scripts. Especially useful when scaffolding has natural-language requirements beyond pure code.
+
+**Examples**: `new-workflow` (service/handler with your annotations), `new-migration` (template + gotchas), `create-app` (auth, logging, deploy pre-wired)
+
+### 6. Code Quality & Review
+
+Skills that enforce code quality. Can include deterministic scripts for robustness. Consider running via hooks or GitHub Actions.
+
+**Examples**: `adversarial-review` (subagent critique loop), `code-style` (styles Claude defaults poorly on), `testing-practices` (how and what to test)
+
+### 7. CI/CD & Deployment
+
+Skills that help fetch, push, and deploy code. May reference other skills for data collection.
+
+**Examples**: `babysit-pr` (retry flaky CI → resolve conflicts → auto-merge), `deploy-service` (build → smoke → gradual rollout → auto-rollback), `cherry-pick-prod` (worktree → cherry-pick → PR)
+
+### 8. Runbooks
+
+Skills that take a symptom (Slack thread, alert, error signature) and walk through investigation to produce a structured report.
+
+**Examples**: `service-debugging` (symptom → tool → query mapping), `oncall-runner` (fetch alert → check suspects → format finding), `log-correlator` (request ID → cross-system log correlation)
+
+### 9. Infrastructure Operations
+
+Skills for routine maintenance with guardrails on destructive actions.
+
+**Examples**: `orphan-cleanup` (find orphaned resources → Slack → soak → confirm → cleanup), `dependency-management` (org approval workflow), `cost-investigation` (storage/egress spike analysis)
+
+---
+
 ## Dynamic Content Injection
 
 ### String Substitutions
@@ -67,6 +129,7 @@ Skill dir: ${CLAUDE_SKILL_DIR}
 | `$ARGUMENTS[0]` | Alternative syntax for positional |
 | `${CLAUDE_SESSION_ID}` | Current session ID |
 | `${CLAUDE_SKILL_DIR}` | Absolute path to skill directory |
+| `${CLAUDE_PLUGIN_DATA}` | Persistent data folder (survives plugin upgrades) |
 
 ### Shell Command Injection
 
@@ -115,6 +178,7 @@ Thoroughly analyze the codebase for security issues...
 Overview        → Core principle in 1-2 sentences
 When to Use     → Symptom/scenario list + when NOT to use
 Core Pattern    → Decision flow or key rules
+Gotchas         → Common failure points (highest-value content)
 Quick Reference → Scannable lookup table
 Implementation  → Concrete steps
 Common Mistakes → Frequent errors + corrections
@@ -204,6 +268,64 @@ git commit -m "fix: resolve null check in user validation"
 
 ---
 
+## Best Practices
+
+### Build a Gotchas Section
+
+The **highest-signal content** in any skill is the Gotchas section. Build it from real failure points Claude encounters when using your skill. Update it over time — good skills are maintained, not just written.
+
+```markdown
+## Gotchas
+- `createUser()` silently succeeds with duplicate emails — always check existence first
+- The staging API returns 200 even on auth failure — check the response body
+- Date fields use UTC but the dashboard displays local time — specify timezone explicitly
+```
+
+### Don't State the Obvious
+
+Focus on information that pushes Claude out of its normal way of thinking. Delete basic explanations. Include only expert decisions, trade-offs, and project-specific conventions.
+
+### Setup & Config Pattern
+
+For skills that need user-specific context (channels, credentials, preferences), store setup in a config file:
+
+```markdown
+## Setup
+If `${CLAUDE_PLUGIN_DATA}/config.json` does not exist, ask the user:
+1. Which Slack channel to post to?
+2. What timezone for timestamps?
+
+Store answers in `${CLAUDE_PLUGIN_DATA}/config.json`.
+Use the AskUserQuestion tool for structured, multiple-choice questions.
+```
+
+### Scripts & Code Composition
+
+Include helper scripts and libraries in the skill folder. Claude composes them at runtime instead of reconstructing boilerplate.
+
+```
+skills/data-analysis/
+├── SKILL.md
+├── lib/
+│   ├── fetch_events.py     # query event source
+│   ├── compute_funnel.py   # funnel analysis
+│   └── format_report.py    # output formatting
+```
+
+Claude reads these helpers and generates glue code to compose them for complex analysis tasks.
+
+### Skill Composition
+
+Skills can reference other skills by name. Claude will invoke them if installed:
+
+```markdown
+After generating the report, use the `/file-upload` skill to share it.
+```
+
+No formal dependency management — just reference by name and document the dependency.
+
+---
+
 ## Persuasion Principles
 
 Based on Meincke et al. (2025) — which influence techniques work on LLMs:
@@ -218,22 +340,6 @@ Based on Meincke et al. (2025) — which influence techniques work on LLMs:
 **Avoid**:
 - **Reciprocity** — feels manipulative, AI may over-comply
 - **Liking** — produces sycophantic behavior
-
----
-
-## Skill Types
-
-### Technique
-Concrete method with specific steps. Best for repeatable workflows.
-Example: `condition-based-waiting` — how to wait for async conditions.
-
-### Pattern
-A thinking approach, not a step-by-step procedure. Best for judgment calls.
-Example: `flatten-with-flags` — when to flatten nested conditionals.
-
-### Reference
-API documentation, syntax guides, lookup tables. Best for factual knowledge.
-Example: `office-docs` — Microsoft Office XML format reference.
 
 ---
 
@@ -310,3 +416,40 @@ hooks:
 ```
 
 Hook events include `PreToolUse` (can block), `PostToolUse`, `Elicitation`, `PostCompact`, and 13 others. Use hooks for safety gates, auto-validation, and workflow enforcement within a skill's scope.
+
+### On-Demand Hooks Pattern
+
+Use skill-scoped hooks for opinionated safety that you only want sometimes:
+
+```yaml
+---
+name: careful
+hooks:
+  PreToolUse:
+    - matcher: "Bash(rm -rf *)"
+      hooks:
+        - type: command
+          command: "echo 'BLOCKED: rm -rf in careful mode' >&2 && exit 1"
+    - matcher: "Bash(*force*push*)"
+      hooks:
+        - type: command
+          command: "echo 'BLOCKED: force push in careful mode' >&2 && exit 1"
+---
+```
+
+Invoke `/careful` when touching production. Having these hooks always-on would be too restrictive.
+
+---
+
+## Memory & Persistent Data
+
+Skills can maintain state across invocations by storing data in `${CLAUDE_PLUGIN_DATA}`:
+
+```markdown
+After posting standup, append a summary to `${CLAUDE_PLUGIN_DATA}/standups.log`.
+Next invocation, read the log to identify what changed since yesterday.
+```
+
+**Important**: Data in the skill directory (`${CLAUDE_SKILL_DIR}`) may be deleted on plugin upgrade. Always use `${CLAUDE_PLUGIN_DATA}` for persistent state.
+
+Formats range from simple (append-only text log) to complex (SQLite database).
