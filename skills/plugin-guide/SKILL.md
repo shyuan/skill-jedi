@@ -1,5 +1,6 @@
 ---
 name: plugin-guide
+user_invocable: true
 description: >
   Guide for packaging Claude Code skills into distributable plugins.
   Use when creating a plugin for marketplace distribution, setting up

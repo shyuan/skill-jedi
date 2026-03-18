@@ -1,5 +1,6 @@
 ---
 name: skill-review
+user_invocable: true
 description: >
   Audit and review Claude Code skills for quality, anti-patterns, and effectiveness.
   Use when reviewing an existing skill's design, checking for common mistakes,

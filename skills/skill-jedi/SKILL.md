@@ -1,5 +1,6 @@
 ---
 name: skill-jedi
+user_invocable: true
 description: >
   Guide for designing effective Claude Code skills with proven patterns.
   Use when creating a new skill and need design guidance beyond basic structure,
