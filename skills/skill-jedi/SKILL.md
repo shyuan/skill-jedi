@@ -94,6 +94,14 @@ Quick reference — details in [references/design-patterns.md](references/design
 **GREEN**: Write the skill. Test with it. Verify improvement.
 **REFACTOR**: Find new rationalizations AI uses to bypass rules. Add to rationalization table. Retest.
 
+## Gotchas
+
+- Beginners jump to Nine Skill Types and start writing — always check Architecture Decision first to confirm a skill is the right solution
+- Hub-and-Spoke "summary" easily becomes copy-paste — summaries should say *what* and *when*, never restate reference details
+- Description length vs trigger quality: the 2% budget is shared across all installed skills — 10 plugins can exhaust it, causing low-priority descriptions to be excluded
+- "I'll add a Rationalization Table later" — you won't. Write it with the Iron Law or it won't exist
+- Skills that teach patterns (like this one) feel complete on first draft — they aren't. Real gotchas only emerge after Claude fails in production use
+
 ## Related Skills
 
 - `/skill-review` — Audit an existing skill against anti-patterns checklist
