@@ -214,29 +214,3 @@ Project CLAUDE.md says one thing, personal `~/.claude/CLAUDE.md` says the opposi
 |---|---|---|
 | Skill reimplements functionality that another installed skill already provides | No awareness of related skills; duplicated effort | Reference other skills by name. Claude will invoke them if installed. Document skill dependencies. |
 
----
-
-## Review Checklist
-
-Use this when auditing an existing skill:
-
-- [ ] Description is a trigger condition, not a workflow (no Workflow Description)
-- [ ] Description uses third person, specific keywords (no Phantom Trigger, Silent Misfire)
-- [ ] Description doesn't overlap with other skills (no Cross-Fire)
-- [ ] SKILL.md < 500 lines, body < 500 words (no Kitchen Sink)
-- [ ] One clear responsibility (no God Skill)
-- [ ] Directives, not suggestions (no Soft Language Trap)
-- [ ] No basic concept explanations (no Over-Teaching)
-- [ ] Decision frameworks, not rigid procedures (no Procedural Straitjacket)
-- [ ] Has a Gotchas section built from real failures (no Missing Gotchas)
-- [ ] References linked from decision points (no Orphan Reference)
-- [ ] No nested references; no `@` links (no Force Loader, Nested References)
-- [ ] No duplicated content across files (no Redundant Duplication)
-- [ ] Every Iron Law has a Rationalization Table (no Naked Rule)
-- [ ] Critical rules repeated at decision points (no Training-Data Override)
-- [ ] `allowed-tools` is minimal (no Over-Permissioned)
-- [ ] No executable scripts unless audited (no Toxic Skill)
-- [ ] No `!` in inline code spans (no Exclamation Mark Bomb)
-- [ ] Persistent data uses `${CLAUDE_PLUGIN_DATA}` (no lost state on upgrade)
-- [ ] References other skills instead of reimplementing (no Missed Composition)
-- [ ] Tested with 5+ trigger prompts including false triggers (no Silent Misfire)
