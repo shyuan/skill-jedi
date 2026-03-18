@@ -11,10 +11,7 @@
   "plugins": [
     {
       "name": "skill-jedi",
-      "source": {
-        "source": "path",
-        "path": "./"
-      },
+      "source": "./",
       "description": "Three skills for mastering Claude Code skill design, quality review, and plugin distribution",
       "version": "1.1.2"
     }
