@@ -1,14 +1,14 @@
 ---
 name: skill-jedi
 description: >
-  Guide for designing effective Claude Code skills and plugins with proven patterns.
+  Guide for designing effective Claude Code skills with proven patterns.
   Use when creating a new skill and need design guidance beyond basic structure,
   when deciding skill architecture (MCP vs skill vs plugin), when optimizing
-  token efficiency, or when packaging skills into plugins for marketplace distribution.
-  Also use when reviewing or improving an existing skill's design quality.
+  token efficiency, or when choosing the right skill type for your use case.
+  Not for reviewing existing skills (use /skill-review) or plugin packaging (use /plugin-guide).
 ---
 
-# Skill Jedi — Design Guide for Claude Code Skills & Plugins
+# Skill Jedi — Design Guide for Claude Code Skills
 
 ## Core Philosophy
 
@@ -16,13 +16,31 @@ description: >
 
 MCP tools give Claude new abilities (API calls, file ops). Skills shape *how* Claude thinks and decides. A well-designed skill changes behavior, not just adds features.
 
+**A skill is a folder, not just a markdown file.** Include scripts, assets, data, config — Claude can discover, explore, and manipulate the entire folder.
+
 ## Architecture Decision
 
 | Need | Solution | Complexity |
 |------|----------|------------|
 | Teach Claude a workflow or pattern | Skill only | Low |
 | Give Claude new capabilities + guidance | MCP server + Skill | Medium |
-| Distribute to other users | Plugin (three-repo) | High |
+| Distribute to other users | Plugin (use `/plugin-guide`) | High |
+
+## Nine Skill Types
+
+Choose the right type — details and examples in [references/design-patterns.md](references/design-patterns.md):
+
+| Type | Purpose |
+|------|---------|
+| **Library & API Reference** | Explain how to use a library, CLI, or SDK correctly |
+| **Product Verification** | Test/verify code works (often with playwright, tmux) |
+| **Data Fetching & Analysis** | Connect to data and monitoring stacks |
+| **Business Process** | Automate repetitive workflows into one command |
+| **Code Scaffolding** | Generate framework boilerplate for your codebase |
+| **Code Quality & Review** | Enforce code quality, review code |
+| **CI/CD & Deployment** | Fetch, push, deploy code |
+| **Runbooks** | Investigate symptoms, produce structured reports |
+| **Infrastructure Ops** | Routine maintenance with guardrails |
 
 ## Frontmatter Quick Reference
 
@@ -46,7 +64,7 @@ Full details in [references/design-patterns.md](references/design-patterns.md).
 Skills support runtime injection:
 
 - **Arguments**: `$ARGUMENTS`, `$0`, `$1` — from `/skill-name arg0 arg1`
-- **Variables**: `${CLAUDE_SESSION_ID}`, `${CLAUDE_SKILL_DIR}`
+- **Variables**: `${CLAUDE_SESSION_ID}`, `${CLAUDE_SKILL_DIR}`, `${CLAUDE_PLUGIN_DATA}`
 - **Shell**: `!` + backtick-wrapped command — executes before Claude sees the skill
 
 ## Six Design Patterns
@@ -62,14 +80,10 @@ Quick reference — details in [references/design-patterns.md](references/design
 
 ## Token Budget
 
-- Description budget: **2% of context window** (dynamic, shared across all skills). 1M context ≈ 20K chars total. Be concise, but don't sacrifice trigger quality for brevity.
+- Description budget: **2% of context window** (dynamic, shared across all skills)
 - SKILL.md body: < 500 words, < 500 lines
 - References: one level deep, loaded on demand — never use `@` links
 - Progressive loading: startup = name+description only → invocation = SKILL.md → on-demand = references/
-
-## Anti-Patterns
-
-19 common mistakes that degrade skill quality — [references/anti-patterns.md](references/anti-patterns.md). Includes a review checklist for auditing existing skills.
 
 ## TDD Workflow
 
@@ -77,12 +91,7 @@ Quick reference — details in [references/design-patterns.md](references/design
 **GREEN**: Write the skill. Test with it. Verify improvement.
 **REFACTOR**: Find new rationalizations AI uses to bypass rules. Add to rationalization table. Retest.
 
-## Plugin Packaging
+## Related Skills
 
-Three-repo architecture for distribution — details in [references/plugin-architecture.md](references/plugin-architecture.md):
-
-- **Marketplace repo** — Plugin catalog only, minimal
-- **Plugin repo** — Skills + embedded MCP dist, the installable unit
-- **MCP server repo** — Standalone server, usable outside Claude Code
-
-Plugins now support: skills, commands, agents, hooks, MCP servers, LSP servers, output styles.
+- `/skill-review` — Audit an existing skill against anti-patterns checklist
+- `/plugin-guide` — Package skills into plugins for marketplace distribution

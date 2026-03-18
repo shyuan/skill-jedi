@@ -1,6 +1,6 @@
 # Skill & Plugin Anti-Patterns
 
-Common design mistakes that degrade skill effectiveness, waste tokens, or introduce security risks. Use this as a checklist when reviewing existing skills or validating new ones.
+22 common design mistakes that degrade skill effectiveness, waste tokens, or introduce security risks. Use this as a checklist when reviewing existing skills or validating new ones.
 
 Format: **Symptom** (what you observe) → **Problem** (root cause) → **Fix** (what to do instead).
 
@@ -194,6 +194,28 @@ Project CLAUDE.md says one thing, personal `~/.claude/CLAUDE.md` says the opposi
 
 ---
 
+## Effectiveness
+
+### 20. Missing Gotchas
+
+| Symptom | Problem | Fix |
+|---|---|---|
+| Claude keeps hitting the same failure modes; skill doesn't improve over time | No gotchas section, or gotchas not maintained | Build a Gotchas section from real Claude failures. Update it every time Claude fails in a new way. This is the highest-value content in any skill. |
+
+### 21. No Persistent Memory
+
+| Symptom | Problem | Fix |
+|---|---|---|
+| Skill can't learn from previous executions; each run starts from scratch | Data stored in skill directory (deleted on upgrade) or not stored at all | Use `${CLAUDE_PLUGIN_DATA}` for persistent state. Log previous executions so Claude can read its own history. |
+
+### 22. Missed Composition
+
+| Symptom | Problem | Fix |
+|---|---|---|
+| Skill reimplements functionality that another installed skill already provides | No awareness of related skills; duplicated effort | Reference other skills by name. Claude will invoke them if installed. Document skill dependencies. |
+
+---
+
 ## Review Checklist
 
 Use this when auditing an existing skill:
@@ -206,6 +228,7 @@ Use this when auditing an existing skill:
 - [ ] Directives, not suggestions (no Soft Language Trap)
 - [ ] No basic concept explanations (no Over-Teaching)
 - [ ] Decision frameworks, not rigid procedures (no Procedural Straitjacket)
+- [ ] Has a Gotchas section built from real failures (no Missing Gotchas)
 - [ ] References linked from decision points (no Orphan Reference)
 - [ ] No nested references; no `@` links (no Force Loader, Nested References)
 - [ ] No duplicated content across files (no Redundant Duplication)
@@ -214,4 +237,6 @@ Use this when auditing an existing skill:
 - [ ] `allowed-tools` is minimal (no Over-Permissioned)
 - [ ] No executable scripts unless audited (no Toxic Skill)
 - [ ] No `!` in inline code spans (no Exclamation Mark Bomb)
+- [ ] Persistent data uses `${CLAUDE_PLUGIN_DATA}` (no lost state on upgrade)
+- [ ] References other skills instead of reimplementing (no Missed Composition)
 - [ ] Tested with 5+ trigger prompts including false triggers (no Silent Misfire)
