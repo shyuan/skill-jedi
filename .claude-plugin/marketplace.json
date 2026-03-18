@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Master the art of skill & plugin design for Claude Code",
-    "version": "1.1.0"
+    "version": "1.1.1"
   },
   "plugins": [
     {
@@ -16,7 +16,7 @@
         "path": "./"
       },
       "description": "Three skills for mastering Claude Code skill design, quality review, and plugin distribution",
-      "version": "1.1.0"
+      "version": "1.1.1"
     }
   ]
 }
