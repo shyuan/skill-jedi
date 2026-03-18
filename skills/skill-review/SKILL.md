@@ -53,6 +53,13 @@ description: >
 - [ ] Gotchas section exists and is maintained over time
 - [ ] Token cost justified by behavior improvement
 
+## Gotchas
+
+- Checklist easily becomes mechanical checkbox ticking — every failing item needs the full explanation in anti-patterns.md to judge correctly
+- Most commonly skipped checks: Rationalization Table (everyone thinks Iron Law alone is enough) and trigger testing (one manual test feels sufficient)
+- Reviewing your own skill is harder than reviewing someone else's — you rationalize your own design decisions; use a fresh session or another person
+- 3 of the 22 anti-patterns are usage-level (Context Bleed, Correction Loop, Contradictory Rules) — not in Quick Checklist but still worth flagging
+
 ## Full Anti-Pattern Catalog
 
 22 documented anti-patterns with symptoms, root causes, and fixes — see [references/anti-patterns.md](references/anti-patterns.md).
